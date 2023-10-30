@@ -14,8 +14,14 @@ public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryCo
             .AddJsonFile("appsettings.json")
             .Build();
 
+        //var builder = new DbContextOptionsBuilder<RepositoryContext>()
+        //    .UseSqlServer(configuration.GetConnectionString("sqlConnection"));
+
         var builder = new DbContextOptionsBuilder<RepositoryContext>()
-            .UseSqlServer(configuration.GetConnectionString("sqlConnection"));
+            .UseSqlServer(
+                connectionString: configuration.GetConnectionString("sqlConnection"),
+                sqlServerOptionsAction: b => b.MigrationsAssembly("CompanyEmployees"));
+
 
         return new RepositoryContext(builder.Options);
     }
