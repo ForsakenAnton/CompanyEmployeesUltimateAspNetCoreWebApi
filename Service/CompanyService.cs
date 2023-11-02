@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using LoggerService;
 using Service.Contracts;
@@ -53,8 +54,10 @@ internal sealed class CompanyService : ICompanyService
     public CompanyDto GetCompany(Guid id, bool trackChanges)
     {
         var company = _repository.Company.GetCompany(id, trackChanges);
-
-        //Check if the company is null
+        if (company is null)
+        {
+            throw new CompanyNotFoundException(id);
+        }
         var companyDto = _mapper.Map<CompanyDto>(company);
 
         return companyDto;
