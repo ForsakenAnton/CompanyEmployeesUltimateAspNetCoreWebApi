@@ -21,6 +21,7 @@ public class CompaniesController : ControllerBase
     {
         //try
         //{
+        throw new Exception("Exception 0_o");
             var companies = _service.CompanyService.GetAllCompanies(trackChanges: false);
 
             return Ok(companies);
