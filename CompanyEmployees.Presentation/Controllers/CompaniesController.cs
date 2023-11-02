@@ -21,7 +21,7 @@ public class CompaniesController : ControllerBase
     {
         //try
         //{
-        throw new Exception("Exception 0_o");
+        //throw new Exception("Exception 0_o");
             var companies = _service.CompanyService.GetAllCompanies(trackChanges: false);
 
             return Ok(companies);
@@ -30,5 +30,14 @@ public class CompaniesController : ControllerBase
         //{
         //    return StatusCode(500, "Internal server error");
         //}
+    }
+
+    [HttpGet("{id:guid}")]
+    public IActionResult GetCompany(Guid id)
+    {
+        var company = _service.CompanyService
+            .GetCompany(id, trackChanges: false);
+
+        return Ok(company);
     }
 }
