@@ -1,4 +1,5 @@
 ﻿using NLog;
+using Contracts;
 
 namespace LoggerService;
 
