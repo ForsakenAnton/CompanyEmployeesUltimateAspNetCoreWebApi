@@ -14,10 +14,16 @@ public class MappingProfile : Profile
         //        memberOptions: opt => opt
         //            .MapFrom(x => string.Join(' ', x.Address, x.Country)));
 
+        //CreateMap<Company, CompanyDto>()
+        //    .ForCtorParam(
+        //        ctorParamName: "FullAddress",
+        //        paramOptions: opt => 
+        //            opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
+
         CreateMap<Company, CompanyDto>()
-            .ForCtorParam(
-                ctorParamName: "FullAddress",
-                paramOptions: opt => 
+            .ForMember(
+                destinationMember: c => c.FullAddress,
+                memberOptions: opt =>
                     opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
 
         CreateMap<Employee, EmployeeDto>();
