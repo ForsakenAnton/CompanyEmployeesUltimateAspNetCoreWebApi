@@ -44,4 +44,9 @@ public static class ServiceExtensions
             .AddDbContext<RepositoryContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
     }
+
+
+    public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
+        builder.AddMvcOptions(config => 
+            config.OutputFormatters.Add(new CsvOutputFormatter()));
 }
