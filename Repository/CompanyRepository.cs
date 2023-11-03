@@ -6,7 +6,7 @@ namespace Repository;
 public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
 {
     public CompanyRepository(RepositoryContext repositoryContext)
-    : base(repositoryContext)
+        : base(repositoryContext)
     {
     }
 
@@ -19,5 +19,10 @@ public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
     {
         return FindByCondition(c => c.Id.Equals(companyId), trackChanges)
             .SingleOrDefault();
+    }
+
+    public void CreateCompany(Company company)
+    {
+        Create(company);
     }
 }
