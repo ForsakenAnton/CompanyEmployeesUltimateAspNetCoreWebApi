@@ -10,6 +10,7 @@
 
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="7.0.13" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     </ItemGroup>
 
