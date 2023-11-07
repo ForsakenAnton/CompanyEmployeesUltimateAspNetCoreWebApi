@@ -113,6 +113,11 @@ public class CompaniesController : ControllerBase
             return BadRequest("CompanyForUpdateDto object is null");
         }
 
+        if (!ModelState.IsValid)
+        {
+            return UnprocessableEntity(ModelState);
+        }
+
         _service.CompanyService
             .UpdateCompany(id, company, trackChanges: true);
 
