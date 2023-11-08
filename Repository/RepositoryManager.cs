@@ -22,9 +22,9 @@ public sealed class RepositoryManager : IRepositoryManager
     public ICompanyRepository Company => _companyRepository.Value;
     public IEmployeeRepository Employee => _employeeRepository.Value;
 
-    public void Save()
+    public async Task SaveAsync()
     {
-        _repositoryContext.SaveChanges();
+        await _repositoryContext.SaveChangesAsync();
     }
 }
 
