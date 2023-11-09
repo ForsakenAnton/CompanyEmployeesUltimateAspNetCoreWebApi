@@ -18,13 +18,28 @@ public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
         EmployeeParameters employeeParameters,
         bool trackChanges)
     {
+        //var employees = await FindByCondition(e => e.CompanyId.Equals(companyId), trackChanges)
+        //    .OrderBy(e => e.Name)
+        //    .ToListAsync();
+
+        //return PagedList<Employee>.ToPagedList(
+        //    source: employees,
+        //    pageNumber: employeeParameters.PageNumber,
+        //    pageSize: employeeParameters.PageSize);
+
         var employees = await FindByCondition(e => e.CompanyId.Equals(companyId), trackChanges)
             .OrderBy(e => e.Name)
+            .Skip((employeeParameters.PageNumber - 1) * employeeParameters.PageSize)
+            .Take(employeeParameters.PageSize)
             .ToListAsync();
 
-        return PagedList<Employee>.ToPagedList(
-            source: employees,
-            pageNumber: employeeParameters.PageNumber,
+        var count = await FindByCondition(e => e.CompanyId.Equals(companyId), trackChanges)
+            .CountAsync();
+
+        return new PagedList<Employee>(
+            items: employees,
+            count: count, 
+            pageNumber: employeeParameters.PageNumber, 
             pageSize: employeeParameters.PageSize);
     }
 
