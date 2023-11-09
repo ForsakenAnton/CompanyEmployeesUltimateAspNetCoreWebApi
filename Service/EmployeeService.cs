@@ -31,6 +31,11 @@ internal sealed class EmployeeService : IEmployeeService
         EmployeeParameters employeeParameters,
         bool trackChanges)
     {
+        if (!employeeParameters.ValidAgeRange)
+        {
+            throw new MaxAgeRangeBadRequestException();
+        }
+
         await CheckIfCompanyExists(companyId, trackChanges);
 
         var employeesWithMetaData = await _repository.Employee
