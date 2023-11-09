@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc; // (!) Deprecated
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using CompanyEmployees.Presentation.ModelBinders;
+using CompanyEmployees.Presentation.ActionFilters;
 
 namespace CompanyEmployees.Presentation.Controllers;
 
@@ -46,17 +47,18 @@ public class CompaniesController : ControllerBase
 
 
     [HttpPost]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
     {
-        if (company is null)
-        {
-            return BadRequest("CompanyForCreationDto object is null");
-        }
+        //if (company is null)
+        //{
+        //    return BadRequest("CompanyForCreationDto object is null");
+        //}
 
-        if (!ModelState.IsValid)
-        {
-            return UnprocessableEntity(ModelState);
-        }
+        //if (!ModelState.IsValid)
+        //{
+        //    return UnprocessableEntity(ModelState);
+        //}
 
         var createdCompany = await _service.CompanyService
             .CreateCompanyAsync(company);
@@ -106,17 +108,18 @@ public class CompaniesController : ControllerBase
 
 
     [HttpPut("{id:guid}")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> UpdateCompany(Guid id, [FromBody] CompanyForUpdateDto company)
     {
-        if (company is null)
-        {
-            return BadRequest("CompanyForUpdateDto object is null");
-        }
+        //if (company is null)
+        //{
+        //    return BadRequest("CompanyForUpdateDto object is null");
+        //}
 
-        if (!ModelState.IsValid)
-        {
-            return UnprocessableEntity(ModelState);
-        }
+        //if (!ModelState.IsValid)
+        //{
+        //    return UnprocessableEntity(ModelState);
+        //}
 
         await _service.CompanyService
             .UpdateCompanyAsync(id, company, trackChanges: true);

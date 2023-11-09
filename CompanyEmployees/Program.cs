@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using NLog;
 using Contracts;
 using CompanyEmployees.Extensions;
+using CompanyEmployees.Presentation.ActionFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,8 @@ NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() =>
         .GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
         .OfType<NewtonsoftJsonPatchInputFormatter>()
         .First();
+
+builder.Services.AddScoped<ValidationFilterAttribute>();
 
 builder.Services
     .AddControllers(config =>
