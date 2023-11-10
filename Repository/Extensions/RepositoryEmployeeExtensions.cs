@@ -37,7 +37,9 @@ public static class RepositoryEmployeeExtensions
     }
 
 
-    public static IQueryable<Employee> Sort(this IQueryable<Employee> employees, string? orderByQueryString)
+    public static IQueryable<Employee> Sort(
+        this IQueryable<Employee> employees,
+        string? orderByQueryString)
     {
         if (string.IsNullOrWhiteSpace(orderByQueryString))
         {
@@ -60,7 +62,7 @@ public static class RepositoryEmployeeExtensions
                 continue;
             }
 
-            var propertyFromQueryName = param.Split(" ")[0];
+            string propertyFromQueryName = param.Split(" ")[0];
 
             PropertyInfo? objectProperty = propertyInfos.FirstOrDefault(pi =>
                 pi.Name.Equals(propertyFromQueryName, StringComparison.InvariantCultureIgnoreCase));
@@ -73,7 +75,9 @@ public static class RepositoryEmployeeExtensions
             orderQueryBuilder.Append($"{objectProperty.Name.ToString()} {direction},");
         }
 
-        string orderQuery = orderQueryBuilder.ToString().TrimEnd(',', ' ');
+        string orderQuery = orderQueryBuilder
+            .ToString()
+            .TrimEnd(',', ' ');
         if (string.IsNullOrWhiteSpace(orderQuery))
         {
             return employees.OrderBy(e => e.Name);
