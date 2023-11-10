@@ -2,6 +2,7 @@
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Shared.RequestFeatures;
+using Repository.Extensions;
 
 namespace Repository;
 
@@ -27,10 +28,18 @@ public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
         //    pageNumber: employeeParameters.PageNumber,
         //    pageSize: employeeParameters.PageSize);
 
-        var employees = await FindByCondition( e => e.CompanyId.Equals(companyId) &&
-                                                        e.Age >= employeeParameters.MinAge &&
-                                                        e.Age <= employeeParameters.MaxAge,
-                                                    trackChanges)
+        //var employees = await FindByCondition( e => e.CompanyId.Equals(companyId) &&
+        //                                                e.Age >= employeeParameters.MinAge &&
+        //                                                e.Age <= employeeParameters.MaxAge,
+        //                                            trackChanges)
+        //    .OrderBy(e => e.Name)
+        //    .Skip((employeeParameters.PageNumber - 1) * employeeParameters.PageSize)
+        //    .Take(employeeParameters.PageSize)
+        //    .ToListAsync();
+
+        var employees = await FindByCondition(e => e.CompanyId.Equals(companyId), trackChanges)
+            .FilterEmployees(employeeParameters.MinAge, employeeParameters.MaxAge)
+            .Search(employeeParameters.SearchTerm)
             .OrderBy(e => e.Name)
             .Skip((employeeParameters.PageNumber - 1) * employeeParameters.PageSize)
             .Take(employeeParameters.PageSize)
