@@ -31,7 +31,7 @@ internal sealed class EmployeeService : IEmployeeService
     }
 
 
-    public async Task<(IEnumerable<ExpandoObject> employees, MetaData metaData)> GetEmployeesAsync(
+    public async Task<(IEnumerable<Entity> employees, MetaData metaData)> GetEmployeesAsync(
         Guid companyId,
         EmployeeParameters employeeParameters,
         bool trackChanges)
@@ -49,7 +49,7 @@ internal sealed class EmployeeService : IEmployeeService
         var employeesDto = _mapper
             .Map<IEnumerable<EmployeeDto>>(employeesWithMetaData);
 
-        IEnumerable<ExpandoObject> shapedData = _dataShaper
+        IEnumerable<Entity> shapedData = _dataShaper
             .ShapeData(employeesDto, employeeParameters.Fields);
 
 
