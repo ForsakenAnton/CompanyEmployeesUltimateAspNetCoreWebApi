@@ -17,14 +17,14 @@ public class DataShaper<T> : IDataShaper<T> where T : class
 
     public IEnumerable<ExpandoObject> ShapeData(
         IEnumerable<T> entities, 
-        string fieldsString)
+        string? fieldsString)
     {
         var requiredProperties = GetRequiredProperties(fieldsString);
 
         return FetchData(entities, requiredProperties);
     }
 
-    public ExpandoObject ShapeData(T entity, string fieldsString)
+    public ExpandoObject ShapeData(T entity, string? fieldsString)
     {
         var requiredProperties = GetRequiredProperties(fieldsString);
 
@@ -32,12 +32,12 @@ public class DataShaper<T> : IDataShaper<T> where T : class
     }
 
 
-    private IEnumerable<PropertyInfo> GetRequiredProperties(string fieldsString)
+    private IEnumerable<PropertyInfo> GetRequiredProperties(string? fieldsString)
     {
         var requiredProperties = new List<PropertyInfo>();
         if (!string.IsNullOrWhiteSpace(fieldsString))
         {
-            var fields = fieldsString.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            string[] fields = fieldsString.Split(',', StringSplitOptions.RemoveEmptyEntries);
             foreach (string field in fields)
             {
                 PropertyInfo? property = Properties.FirstOrDefault(

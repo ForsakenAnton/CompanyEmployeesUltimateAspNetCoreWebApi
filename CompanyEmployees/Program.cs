@@ -5,6 +5,8 @@ using NLog;
 using Contracts;
 using CompanyEmployees.Extensions;
 using CompanyEmployees.Presentation.ActionFilters;
+using Shared.DataTransferObjects;
+using Service.DataShaping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +43,7 @@ NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() =>
         .First();
 
 builder.Services.AddScoped<ValidationFilterAttribute>();
+builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
 
 builder.Services
     .AddControllers(config =>
