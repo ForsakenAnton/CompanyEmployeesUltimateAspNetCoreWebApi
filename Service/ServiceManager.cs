@@ -15,13 +15,13 @@ public sealed class ServiceManager : IServiceManager
         IRepositoryManager repositoryManager,
         ILoggerManager logger,
         IMapper mapper,
-        IDataShaper<EmployeeDto> dataShaper)
+        IEmployeeLinks employeeLinks)
     {
         _companyService = new Lazy<ICompanyService>(() =>
             new CompanyService(repositoryManager, logger, mapper));
 
         _employeeService = new Lazy<IEmployeeService>(() => 
-            new EmployeeService(repositoryManager, logger, mapper, dataShaper));
+            new EmployeeService(repositoryManager, logger, mapper, employeeLinks));
     }
 
     public ICompanyService CompanyService => _companyService.Value;
