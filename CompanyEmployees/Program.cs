@@ -56,6 +56,8 @@ builder.Services
     .AddCustomCSVFormatter()
     .AddApplicationPart(typeof(CompanyEmployees.Presentation.AssemblyReference).Assembly);
 
+builder.Services.AddCustomMediaTypes();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
