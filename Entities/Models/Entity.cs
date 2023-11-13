@@ -3,22 +3,25 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Collections;
+using Entities.LinkModels;
 
 namespace Entities.Models;
+
+#nullable disable
 
 public class Entity : DynamicObject, IXmlSerializable, IDictionary<string, object>
 {
     private readonly string _root = "Entity";
-    private readonly IDictionary<string, object> _expando;
+    private readonly IDictionary<string, object> _expando = null;
 
     public Entity()
     {
         _expando = new ExpandoObject()!;
     }
 
-    public override bool TryGetMember(GetMemberBinder binder, out object? result)
+    public override bool TryGetMember(GetMemberBinder binder, out object result)
     {
-        if (_expando.TryGetValue(binder.Name, out object? value))
+        if (_expando.TryGetValue(binder.Name, out object value))
         {
             result = value;
             return true;
@@ -27,7 +30,7 @@ public class Entity : DynamicObject, IXmlSerializable, IDictionary<string, objec
         return base.TryGetMember(binder, out result!);
     }
 
-    public override bool TrySetMember(SetMemberBinder binder, object? value)
+    public override bool TrySetMember(SetMemberBinder binder, object value)
     {
         _expando[binder.Name] = value;
 
@@ -59,35 +62,36 @@ public class Entity : DynamicObject, IXmlSerializable, IDictionary<string, objec
 
     public void WriteXml(XmlWriter writer)
     {
-        //foreach (var key in _expando.Keys)
-        //{
-        //    var value = _expando[key];
-        //    WriteLinksToXml(key, value, writer);
-        //}
+        foreach (var key in _expando.Keys)
+        {
+            var value = _expando[key];
+            WriteLinksToXml(key, value, writer);
+        }
     }
 
     private void WriteLinksToXml(string key, object value, XmlWriter writer)
     {
-        //writer.WriteStartElement(key);
+        writer.WriteStartElement(key);
 
-        //if (value.GetType() == typeof(List<Link>))
-        //{
-        //    foreach (var val in value as List<Link>)
-        //    {
-        //        writer.WriteStartElement(nameof(Link));
-        //        WriteLinksToXml(nameof(val.Href), val.Href, writer);
-        //        WriteLinksToXml(nameof(val.Method), val.Method, writer);
-        //        WriteLinksToXml(nameof(val.Rel), val.Rel, writer);
-        //        writer.WriteEndElement();
-        //    }
-        //}
-        //else
-        //{
-        //    writer.WriteString(value.ToString());
-        //}
+        if (value.GetType() == typeof(List<Link>))
+        {
+            foreach (var val in value as List<Link>)
+            {
+                writer.WriteStartElement(nameof(Link));
+                WriteLinksToXml(nameof(val.Href), val.Href, writer);
+                WriteLinksToXml(nameof(val.Method), val.Method, writer);
+                WriteLinksToXml(nameof(val.Rel), val.Rel, writer);
+                writer.WriteEndElement();
+            }
+        }
+        else
+        {
+            writer.WriteString(value.ToString());
+        }
 
-        //writer.WriteEndElement();
+        writer.WriteEndElement();
     }
+
 
 
     public void Add(string key, object value)
@@ -177,3 +181,5 @@ public class Entity : DynamicObject, IXmlSerializable, IDictionary<string, objec
         return GetEnumerator();
     }
 }
+
+#nullable enable
