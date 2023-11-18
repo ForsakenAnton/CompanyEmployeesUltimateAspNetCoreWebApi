@@ -19,7 +19,7 @@ public class CompaniesController : ControllerBase
     }
 
 
-    [HttpGet]
+    [HttpGet(Name = "GetCompanies")]
     public async Task<IActionResult> GetCompanies()
     {
         //try
@@ -46,7 +46,7 @@ public class CompaniesController : ControllerBase
     }
 
 
-    [HttpPost]
+    [HttpPost(Name = "CreateCompany")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
     {
