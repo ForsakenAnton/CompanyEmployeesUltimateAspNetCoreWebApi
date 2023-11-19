@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using CompanyEmployees.Presentation.Controllers;
 
 namespace CompanyEmployees.Extensions;
 
@@ -97,6 +98,12 @@ public static class ServiceExtensions
 
             opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
             opt.ApiVersionReader = new Microsoft.AspNetCore.Mvc.Versioning.HeaderApiVersionReader("api-version");
+
+            opt.Conventions.Controller<CompaniesController>()
+                .HasApiVersion(new ApiVersion(1, 0));
+            opt.Conventions.Controller<CompaniesV2Controller>()
+                .HasDeprecatedApiVersion(new ApiVersion(2, 0));
+
             //opt.ApiVersionReader = new Microsoft.AspNetCore.Mvc.Versioning.QueryStringApiVersionReader("api-version");
 
             //opt.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
