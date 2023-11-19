@@ -6,6 +6,7 @@ using Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace CompanyEmployees.Extensions;
 
@@ -93,8 +94,12 @@ public static class ServiceExtensions
         {
             opt.ReportApiVersions = true;
             opt.AssumeDefaultVersionWhenUnspecified = true;
-            //opt.DefaultApiVersion = new ApiVersion(1, 0); //new Asp.Versioning.ApiVersion(1, 0);
-            opt.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
+
+            opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+            opt.ApiVersionReader = new Microsoft.AspNetCore.Mvc.Versioning.HeaderApiVersionReader("api-version");
+
+            //opt.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
+            //opt.ApiVersionReader = new Asp.Versioning.HeaderApiVersionReader("api-version");
         });
     }
 }
