@@ -93,7 +93,7 @@ public static class ServiceExtensions
         {
             opt.ReportApiVersions = true;
             opt.AssumeDefaultVersionWhenUnspecified = true;
-            opt.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
+            opt.DefaultApiVersion = new ApiVersion(1, 0); //new Asp.Versioning.ApiVersion(1, 0);
         });
     }
 }
