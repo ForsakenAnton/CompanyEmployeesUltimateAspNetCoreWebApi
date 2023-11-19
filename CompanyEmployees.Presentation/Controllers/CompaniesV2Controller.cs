@@ -6,7 +6,7 @@ namespace CompanyEmployees.Presentation.Controllers;
 
 
 //[Asp.Versioning.ApiVersion("2.0")]
-[Microsoft.AspNetCore.Mvc.ApiVersion("2.0")]
+[Microsoft.AspNetCore.Mvc.ApiVersion("2.0", Deprecated = true)]
 //[Route("api/{v:apiversion}/companies")]
 [Route("api/companies")]
 

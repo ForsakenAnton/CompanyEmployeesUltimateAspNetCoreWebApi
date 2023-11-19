@@ -97,6 +97,7 @@ public static class ServiceExtensions
 
             opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
             opt.ApiVersionReader = new Microsoft.AspNetCore.Mvc.Versioning.HeaderApiVersionReader("api-version");
+            //opt.ApiVersionReader = new Microsoft.AspNetCore.Mvc.Versioning.QueryStringApiVersionReader("api-version");
 
             //opt.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
             //opt.ApiVersionReader = new Asp.Versioning.HeaderApiVersionReader("api-version");
