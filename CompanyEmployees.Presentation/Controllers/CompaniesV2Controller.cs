@@ -5,8 +5,8 @@ using Service.Contracts;
 namespace CompanyEmployees.Presentation.Controllers;
 
 
-//[Asp.Versioning.ApiVersion("2.0")]
-[Microsoft.AspNetCore.Mvc.ApiVersion("2.0")]
+[Asp.Versioning.ApiVersion("2.0")]
+//[Microsoft.AspNetCore.Mvc.ApiVersion("2.0")]
 [Route("api/companies")]
 [ApiController]
 public class CompaniesV2Controller : ControllerBase

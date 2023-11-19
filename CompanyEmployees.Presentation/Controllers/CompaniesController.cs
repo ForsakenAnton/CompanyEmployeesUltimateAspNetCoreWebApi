@@ -8,8 +8,8 @@ using Asp.Versioning;
 
 namespace CompanyEmployees.Presentation.Controllers;
 
-//[Asp.Versioning.ApiVersion("1.0")]
-[Microsoft.AspNetCore.Mvc.ApiVersion("1.0")]
+[Asp.Versioning.ApiVersion("1.0")]
+//[Microsoft.AspNetCore.Mvc.ApiVersion("1.0")]
 [Route("api/companies")]
 [ApiController]
 public class CompaniesController : ControllerBase
