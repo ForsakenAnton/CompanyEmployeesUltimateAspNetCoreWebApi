@@ -12,6 +12,7 @@ namespace CompanyEmployees.Presentation.Controllers;
 //[Microsoft.AspNetCore.Mvc.ApiVersion("1.0")]
 [Route("api/companies")]
 [ApiController]
+[ResponseCache(CacheProfileName = "120SecondsDuration")]
 public class CompaniesController : ControllerBase
 {
     private readonly IServiceManager _service;

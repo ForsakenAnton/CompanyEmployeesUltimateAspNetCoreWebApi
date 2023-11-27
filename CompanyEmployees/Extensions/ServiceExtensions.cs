@@ -110,4 +110,11 @@ public static class ServiceExtensions
             //opt.ApiVersionReader = new Asp.Versioning.HeaderApiVersionReader("api-version");
         });
     }
+
+
+    public static void ConfigureResponseCaching(this IServiceCollection services)
+    {
+        services.AddResponseCaching();
+    }
+
 }
