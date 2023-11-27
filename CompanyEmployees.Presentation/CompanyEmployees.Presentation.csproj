@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <PackageReference Include="Asp.Versioning.Mvc" Version="7.1.0" />
+      <PackageReference Include="Marvin.Cache.Headers" Version="7.0.0-rc" />
       <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="7.0.13" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.13" />

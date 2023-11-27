@@ -117,4 +117,9 @@ public static class ServiceExtensions
         services.AddResponseCaching();
     }
 
+    public static void ConfigureHttpCacheHeaders(this IServiceCollection services)
+    {
+        services.AddHttpCacheHeaders();
+    }
+
 }
