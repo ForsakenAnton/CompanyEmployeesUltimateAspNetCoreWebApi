@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using CompanyEmployees.Presentation.Controllers;
+using AspNetCoreRateLimit;
 
 namespace CompanyEmployees.Extensions;
 
@@ -40,7 +41,7 @@ public static class ServiceExtensions
 
     public static void ConfigureSqlContext(
         this IServiceCollection services,
-        IConfiguration configuration) 
+        IConfiguration configuration)
     {
         //services.AddSqlServer<RepositoryContext>(
         //    configuration.GetConnectionString("sqlConnection"));
@@ -52,7 +53,7 @@ public static class ServiceExtensions
 
 
     public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
-        builder.AddMvcOptions(config => 
+        builder.AddMvcOptions(config =>
             config.OutputFormatters.Add(new CsvOutputFormatter()));
 
 
@@ -131,4 +132,27 @@ public static class ServiceExtensions
             });
     }
 
+
+    public static void ConfigureRateLimitingOptions(this IServiceCollection services)
+    {
+        var rateLimitRules = new List<RateLimitRule>
+        {
+            new RateLimitRule
+            {
+                Endpoint = "*",
+                Limit = 100, // 3,
+                Period = "5m"
+            }
+        };
+
+        services.Configure<IpRateLimitOptions>(opt =>
+        {
+            opt.GeneralRules = rateLimitRules;
+        });
+
+        services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+        services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+        services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+        services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+    }
 }
