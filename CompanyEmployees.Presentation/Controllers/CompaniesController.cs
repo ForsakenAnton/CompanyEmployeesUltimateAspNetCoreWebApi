@@ -6,6 +6,7 @@ using CompanyEmployees.Presentation.ModelBinders;
 using CompanyEmployees.Presentation.ActionFilters;
 using Asp.Versioning;
 using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CompanyEmployees.Presentation.Controllers;
 
@@ -25,6 +26,7 @@ public class CompaniesController : ControllerBase
 
 
     [HttpGet(Name = "GetCompanies")]
+    [Authorize]
     public async Task<IActionResult> GetCompanies()
     {
         //try
