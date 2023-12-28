@@ -182,7 +182,10 @@ public static class ServiceExtensions
         this IServiceCollection services, 
         IConfiguration configuration)
     {
-        var jwtSettings = configuration.GetSection("JwtSettings");
+        //var jwtSettings = configuration.GetSection("JwtSettings");
+        var jwtConfiguration = new JwtConfiguration();
+        configuration.Bind(jwtConfiguration.Section, jwtConfiguration);
+
         string secretKey = Environment.GetEnvironmentVariable("SECRET")!;
 
         services.AddAuthentication(opt =>
@@ -198,8 +201,8 @@ public static class ServiceExtensions
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtSettings["validIssuer"],
-                ValidAudience = jwtSettings["validAudience"],
+                ValidIssuer = jwtConfiguration.ValidIssuer, //jwtSettings["validIssuer"],
+                ValidAudience = jwtConfiguration.ValidAudience, //jwtSettings["validAudience"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                 //ClockSkew = TimeSpan.FromMinutes(1)
             };
