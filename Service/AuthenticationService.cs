@@ -12,6 +12,7 @@ using System.Text;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System.Security.Cryptography;
+using Entities.Exceptions;
 
 
 namespace Service;
@@ -84,8 +85,27 @@ internal sealed class AuthenticationService : IAuthenticationService
 
         var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
+        //return new TokenDto { AccessToken = accessToken, RefreshToken = refreshToken };
         return new TokenDto(accessToken, refreshToken);
     }
+
+    public async Task<TokenDto> RefreshToken(TokenDto tokenDto)
+    {
+        var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
+        var user = await _userManager.FindByNameAsync(principal.Identity!.Name!);
+
+        if (user == null ||
+            user.RefreshToken != tokenDto.RefreshToken ||
+            user.RefreshTokenExpiryTime <= DateTime.Now)
+        {
+            throw new RefreshTokenBadRequest();
+        }
+
+        _user = user;
+
+        return await CreateToken(populateExp: false);
+    }
+
 
     private SigningCredentials GetSigningCredentials()
     {
