@@ -1,4 +1,7 @@
-﻿public class JwtConfiguration
+﻿
+namespace Entities.ConfigurationModels;
+
+public class JwtConfiguration
 {
     public string Section { get; set; } = "JwtSettings";
     public string? ValidIssuer { get; set; }

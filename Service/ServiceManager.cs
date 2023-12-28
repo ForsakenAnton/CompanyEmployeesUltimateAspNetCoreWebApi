@@ -2,10 +2,14 @@
 using Contracts;
 using Entities.Models;
 using LoggerService;
+using Shared.DataTransferObjects;
+using Service.Contracts;
+using Entities.ConfigurationModels;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Service.Contracts;
-using Shared.DataTransferObjects;
+
+using Microsoft.Extensions.Options;
 
 namespace Service;
 
@@ -21,7 +25,8 @@ public sealed class ServiceManager : IServiceManager
         IMapper mapper,
         IEmployeeLinks employeeLinks,
         UserManager<User> userManager,
-        IConfiguration configuration)
+        //IConfiguration configuration,
+        IOptions<JwtConfiguration> configuration)
     {
         _companyService = new Lazy<ICompanyService>(() =>
             new CompanyService(repositoryManager, logger, mapper));

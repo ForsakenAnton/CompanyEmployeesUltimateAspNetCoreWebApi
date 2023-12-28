@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Entities.ConfigurationModels;
 
 namespace CompanyEmployees.Extensions;
 
@@ -209,4 +210,11 @@ public static class ServiceExtensions
         });
     }
 
+
+    public static void AddJwtConfiguration(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
+    }
 }
