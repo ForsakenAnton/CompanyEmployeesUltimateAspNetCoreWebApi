@@ -181,7 +181,7 @@ public static class ServiceExtensions
 
 
     public static void ConfigureJWT(
-        this IServiceCollection services, 
+        this IServiceCollection services,
         IConfiguration configuration)
     {
         //var jwtSettings = configuration.GetSection("JwtSettings");
@@ -227,13 +227,30 @@ public static class ServiceExtensions
             s.SwaggerDoc("v1", new OpenApiInfo
             {
                 Title = "Code Maze API",
-                Version = "v1"
+                Version = "v1",
+                Description = "CompanyEmployees API by CodeMaze",
+                TermsOfService = new Uri("https://example.com/terms"),
+                Contact = new OpenApiContact
+                {
+                    Name = "John Doe",
+                    Email = "John.Doe@gmail.com",
+                    Url = new Uri("https://twitter.com/johndoe"),
+                },
+                License = new OpenApiLicense
+                {
+                    Name = "CompanyEmployees API LICX",
+                    Url = new Uri("https://example.com/license"),
+                }
             });
             s.SwaggerDoc("v2", new OpenApiInfo
             {
                 Title = "Code Maze API",
                 Version = "v2"
             });
+
+            var xmlFile = $"{typeof(Presentation.AssemblyReference).Assembly.GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            s.IncludeXmlComments(xmlPath);
 
             s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
