@@ -9,8 +9,8 @@ namespace CompanyEmployees.Presentation.Controllers;
 //[Microsoft.AspNetCore.Mvc.ApiVersion("2.0", Deprecated = true)]
 //[Route("api/{v:apiversion}/companies")]
 [Route("api/companies")]
-
 [ApiController]
+[ApiExplorerSettings(GroupName = "v2")]
 public class CompaniesV2Controller : ControllerBase
 {
     private readonly IServiceManager _service;

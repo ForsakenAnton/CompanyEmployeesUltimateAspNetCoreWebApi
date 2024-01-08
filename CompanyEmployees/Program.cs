@@ -28,6 +28,8 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureVersioning();
 builder.Services.ConfigureResponseCaching();
 builder.Services.ConfigureHttpCacheHeaders();
+builder.Services.ConfigureSwagger();
+
 
 builder.Services.AddMemoryCache();
 builder.Services.ConfigureRateLimitingOptions();
@@ -86,6 +88,14 @@ if (app.Environment.IsProduction())
 {
     app.UseHsts();
 }
+
+app.UseSwagger();
+app.UseSwaggerUI(s =>
+{
+    s.SwaggerEndpoint("/swagger/v1/swagger.json", "Code Maze API v1");
+    s.SwaggerEndpoint("/swagger/v2/swagger.json", "Code Maze API v2");
+});
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
